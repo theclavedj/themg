@@ -64,7 +64,7 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     this.classList.add('open', 'show'); /*adds css class open or show*/
     if (openCards.length < 2){
       openCards.push(this);
-    }};
+    };
   if (openCards.length===2){
     if (openCards[0].innerHTML === openCards[1].innerHTML){
       pair();
@@ -73,7 +73,7 @@ function startGame() { /* loops through the listCards array and randomly shuffle
       noPair()
       };
 }
-
+}
 function pair () {
   openCards[0].classList.add("match");
    openCards[1].classList.add("match");
@@ -88,7 +88,7 @@ function noPair () {
        openCards[0].classList.remove("show", "open");
        openCards[1].classList.remove("show", "open");
        openCards = [];
-   },1100)
+   },600)
 }
 
 function cardsListener() {
