@@ -17,14 +17,15 @@ const listCards = [
   "fa fa-cube"]; /* Create a list that holds all of your cards */
 
 document.body.onload = startGame; /*starts the game on page load*/
-const restart = document.querySelector(".restart"); /*DOM selection for restart button*/
-const deck = document.querySelector('.deck'); /*DOM selector to get deck*/
+const restart = document.querySelector(".restart"); /*DOM selection for html restart icon*/
+const deck = document.querySelector('.deck'); /*DOM selector to get html deck*/
+const moves = document.querySelector(".moves");/*DOM selector to get the html moves class*/
+moves.textContent = 0; /*inspired from https://www.w3schools.com/jsref/prop_node_textcontent.asp*/
+let addMove = moves.textContent; /*vaiable which will add a move for each click*/
 let openCards = []; /*array of openCards*/
 let matchedCards = 0; /*counter of matched cards*/
 let time = 0; /* time counter*/
 let tempArray = []; /*temporary array to hold cards*/
-let isAnimating = true; /*animation for fliping the cards*/
-let moves = 0; /*moves counter*/
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -51,7 +52,9 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     let newCards = ''; /*variable for shuffled cards, declared later*/
     let tempArray = []; /*temporary array to hold cards*/
     let openCards = []; /*array of openCards*/
-    matchedCards = 0; /*counter of matched cards*/
+    matchedCards = 0;
+    moves.textContent = 0;
+    addMove = moves.textContent;
       deck.innerHTML = '';
       for (let i = 0; i < fullDeck.length; i++) { /*loop through the listcards*/
         newCards += '<li class="card"><i class="' + fullDeck[i] + '"></i></li>'; /*append new li class*/
@@ -73,8 +76,11 @@ function startGame() { /* loops through the listCards array and randomly shuffle
       noPair()
       };
 }
+addMove++;
+  moves.innerText = addMove /*adds a move for any click on cards*/
 }
-function pair () {
+
+function pair () { /*search in the array for identical cards*/
   openCards[0].classList.add("match");
    openCards[1].classList.add("match");
    openCards[0].classList.remove("show", "open");
