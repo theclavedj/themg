@@ -61,7 +61,17 @@ function startGame() { /* loops through the listCards array and randomly shuffle
 }
 
   function flipCard() {
-    this.classList.add('open', 'show');
+    this.classList.add('open', 'show'); /*adds css class open or show*/
+    if (openCards.length < 2){
+      openCards.push(this);
+    }};
+  if (openCards.length===2){
+    if (openCards[0].innerHTML === openCards[1].innerHTML){
+      pair();
+     }
+    else {
+      noPair()
+      };
 }
 
 function pair () {
@@ -78,7 +88,7 @@ function noPair () {
        openCards[0].classList.remove("show", "open");
        openCards[1].classList.remove("show", "open");
        openCards = [];
-   },1100);
+   },1100)
 }
 
 function cardsListener() {
@@ -88,6 +98,7 @@ function cardsListener() {
        cards[i].addEventListener('click', flipCard);
   }
 }
+
 restart.addEventListener("click", startGame);
   /*
  * set up the event listener for a card. If a card is clicked:
