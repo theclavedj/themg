@@ -1,6 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
 const listCards = [
   "fa fa-diamond",
   "fa fa-paper-plane-o",
@@ -17,17 +14,17 @@ const listCards = [
   "fa fa-bolt",
   "fa fa-bicycle",
   "fa fa-paper-plane-o",
-  "fa fa-cube"];
+  "fa fa-cube"]; /* Create a list that holds all of your cards */
 
-document.body.onload = startGame;
-const restart = document.querySelector(".restart");
-const deck = document.querySelector('.deck');
-let openCards = [];
-let matchedCards = 0;
-let time = 0;
-let tempArray = [];
-let isAnimating = true;
-let moves = 0;
+document.body.onload = startGame; /*starts the game on page load*/
+const restart = document.querySelector(".restart"); /*DOM selection for restart button*/
+const deck = document.querySelector('.deck'); /*DOM selector to get deck*/
+let openCards = []; /*array of openCards*/
+let matchedCards = 0; /*counter of matched cards*/
+let time = 0; /* time counter*/
+let tempArray = []; /*temporary array to hold cards*/
+let isAnimating = true; /*animation for fliping the cards*/
+let moves = 0; /*moves counter*/
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -52,9 +49,9 @@ function shuffle(array) {
 function startGame() { /* loops through the listCards array and randomly shuffles them */
     let fullDeck = shuffle(listCards); /* shuffle the cards */
     let newCards = ''; /*variable for shuffled cards, declared later*/
-    let tempArray = [];
-    let openCards = [];
-    matchedCards = 0;
+    let tempArray = []; /*temporary array to hold cards*/
+    let openCards = []; /*array of openCards*/
+    matchedCards = 0; /*counter of matched cards*/
       deck.innerHTML = '';
       for (let i = 0; i < fullDeck.length; i++) { /*loop through the listcards*/
         newCards += '<li class="card"><i class="' + fullDeck[i] + '"></i></li>'; /*append new li class*/
@@ -89,14 +86,6 @@ function cardsListener() {
   let cards = deck.getElementsByClassName("card");
      for (let i=0; i < cards.length; i++) {
        cards[i].addEventListener('click', flipCard);
-     if(openCards[0].innerHTML === openCards[1].innerHTML){
-
-          pair()
-
-      } else {
-
-         noPair()
-      }
   }
 }
 restart.addEventListener("click", startGame);
