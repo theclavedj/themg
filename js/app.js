@@ -21,10 +21,12 @@ const restart = document.querySelector(".restart"); /*DOM selection for html res
 const deck = document.querySelector('.deck'); /*DOM selector to get html deck*/
 const moves = document.querySelector(".moves");/*DOM selector to get the html moves class*/
 const stars = document.querySelectorAll(".fa-star"); /*DOM selector to get stars*/
+const modal = document.getElementById('myModal'); /*dom selector for the modal*/
+const span = document.getElementsByClassName("close")[0];// Get the <span> element that closes the modal
 moves.textContent = 0; /*inspired from https://www.w3schools.com/jsref/prop_node_textcontent.asp*/
 let addMove = moves.textContent; /*variable which will add a move for each click*/
+let matchedCards = document.getElementsByClassName("match");
 let openCards = []; /*array of openCards*/
-let matchedCards = 0; /*counter of matched cards*/
 let tempArray = []; /*temporary array to hold cards*/
 /*
  * Display the cards on the page
@@ -85,6 +87,7 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     else {
       noPair()
       };
+      openModal()
 }
 addMove++; /*for each click adds a move to the counter*/
   moves.innerText = addMove /*adds a move for any click on cards*/
@@ -152,6 +155,22 @@ function startTimer(){
     },1000);
 }
 restart.addEventListener("click", startGame); /*restarts the game when clicking proper icon*/
+
+function openModal() {
+    if (matchedCards === 8){
+    modal.style.display = "block";
+    stopTimer()
+}
+}
+span.onclick = function() { // When the user clicks on <span> (x), close the modal
+    modal.style.display = "none";
+}
+window.onclick = function(event) { // When the user clicks anywhere outside of the modal, close it
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
   /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
