@@ -20,11 +20,11 @@ document.body.onload = startGame; /*starts the game on page load*/
 const restart = document.querySelector(".restart"); /*DOM selection for html restart icon*/
 const deck = document.querySelector('.deck'); /*DOM selector to get html deck*/
 const moves = document.querySelector(".moves");/*DOM selector to get the html moves class*/
+const stars = document.querySelectorAll(".fa-star"); /*DOM selector to get stars*/
 moves.textContent = 0; /*inspired from https://www.w3schools.com/jsref/prop_node_textcontent.asp*/
-let addMove = moves.textContent; /*vaiable which will add a move for each click*/
+let addMove = moves.textContent; /*variable which will add a move for each click*/
 let openCards = []; /*array of openCards*/
 let matchedCards = 0; /*counter of matched cards*/
-let time = 0; /* time counter*/
 let tempArray = []; /*temporary array to hold cards*/
 /*
  * Display the cards on the page
@@ -52,23 +52,33 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     let newCards = ''; /*variable for shuffled cards, declared later*/
     let tempArray = []; /*temporary array to hold cards*/
     let openCards = []; /*array of openCards*/
-    matchedCards = 0;
+    matchedCards = 0; /*initial value of matched cards*/
     moves.textContent = 0;
     addMove = moves.textContent;
+    for (var i= 0; i < stars.length; i++){ /*adds yellow stars at beggining*/
+        stars[i].style.color = "#FFD700";
+        stars[i].style.visibility = "visible";
+    }
+    second = 0;
+    minute = 0;
+    hour = 0;
+    let timer = document.querySelector(".timer");
+    timer.innerHTML = "0 min 0 sec"; /*adds counter at beggining*/
+    clearInterval(interval); /*stops the time per https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
       deck.innerHTML = '';
       for (let i = 0; i < fullDeck.length; i++) { /*loop through the listcards*/
         newCards += '<li class="card"><i class="' + fullDeck[i] + '"></i></li>'; /*append new li class*/
         deck.innerHTML = newCards;
   }
-  cardsListener();
+  cardsListener(); /*adds cardListener at start*/
 }
 
   function flipCard() {
     this.classList.add('open', 'show'); /*adds css class open or show*/
-    if (openCards.length < 2){
+    if (openCards.length < 2){ /*adds one class on click*/
       openCards.push(this);
     };
-  if (openCards.length===2){
+  if (openCards.length===2){ /*if matches two cards on click*/
     if (openCards[0].innerHTML === openCards[1].innerHTML){
       pair();
      }
@@ -76,9 +86,29 @@ function startGame() { /* loops through the listCards array and randomly shuffle
       noPair()
       };
 }
-addMove++;
+addMove++; /*for each click adds a move to the counter*/
   moves.innerText = addMove /*adds a move for any click on cards*/
-}
+  if(addMove == 1){ /*when one move is made counter starts*/
+        second = 0;
+        minute = 0;
+        hour = 0;
+        startTimer();
+      }
+  if (addMove > 16 && addMove < 24){ /*if less than 16 clicks gets 3 stars, more than 16 to 24 gets 2 stars*/
+          for( i= 0; i < 3; i++){
+              if(i > 1){
+                  stars[i].style.visibility = "collapse";
+              }
+          }
+      }
+      else if (addMove > 32){ /*if 32 or more clicks gets 1 star*/
+          for( i= 0; i < 3; i++){
+              if(i > 0){
+                  stars[i].style.visibility = "collapse";
+              }
+          }
+      }
+  }
 
 function pair () { /*search in the array for identical cards*/
   openCards[0].classList.add("match");
@@ -89,7 +119,7 @@ function pair () { /*search in the array for identical cards*/
    matchedCards++
 }
 
-function noPair () {
+function noPair () {/*search in the array for identical cards, if no match turn them back at 600ms*/
  setTimeout(function(){
        openCards[0].classList.remove("show", "open");
        openCards[1].classList.remove("show", "open");
@@ -97,15 +127,31 @@ function noPair () {
    },600)
 }
 
-function cardsListener() {
+function cardsListener() {/*loop through the DOM card deck and adds flipcard function to it*/
 
   let cards = deck.getElementsByClassName("card");
      for (let i=0; i < cards.length; i++) {
        cards[i].addEventListener('click', flipCard);
   }
 }
-
-restart.addEventListener("click", startGame);
+let second = 0, minute = 0; hour = 0; /*timer function inspired on https://scotch.io/tutorials/how-to-build-a-memory-matching-game-in-javascript#5-the-timer*/
+let timer = document.querySelector(".timer");
+let interval;
+function startTimer(){
+    interval = setInterval(function(){
+        timer.innerHTML = minute+"min "+second+"sec";
+        second++;
+        if(second == 60){
+            minute++;
+            second=0;
+        }
+        if(minute == 60){
+            hour++;
+            minute = 0;
+        }
+    },1000);
+}
+restart.addEventListener("click", startGame); /*restarts the game when clicking proper icon*/
   /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
