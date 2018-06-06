@@ -18,6 +18,7 @@ const listCards = [
 
 document.body.onload = startGame; /*starts the game on page load*/
 const restart = document.querySelector(".restart"); /*DOM selection for html restart icon*/
+const playAgain = document.querySelector(".play-again"); /*DOM selection for html restart icon*/
 const deck = document.querySelector('.deck'); /*DOM selector to get html deck*/
 const moves = document.querySelector(".moves");/*DOM selector to get the html moves class*/
 const stars = document.querySelectorAll(".fa-star"); /*DOM selector to get stars*/
@@ -159,7 +160,13 @@ restart.addEventListener("click", startGame); /*restarts the game when clicking 
 function openModal() {
     if (matchedCards === 8){
     modal.style.display = "block";
-    stopTimer()
+    clearInterval(interval);
+    finalTime = timer.innerHTML;
+    finalMove = moves.textContent.innerHTML;
+    const starRating = document.querySelector(".stars").innerHTML;
+    document.getElementById("finalMove").innerHTML = moves;
+    document.getElementById("starRating").innerHTML = starRating;
+    document.getElementById("totalTime").innerHTML = finalTime;
 }
 }
 span.onclick = function() { // When the user clicks on <span> (x), close the modal
@@ -169,8 +176,10 @@ window.onclick = function(event) { // When the user clicks anywhere outside of t
     if (event.target == modal) {
         modal.style.display = "none";
     }
+function playAgain () {
+  playAgain.addEventListener("click", startGame);
+  }
 }
-
   /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)

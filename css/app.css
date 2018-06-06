@@ -113,6 +113,7 @@ h1 {
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
+    text-align: center;
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -129,6 +130,7 @@ h1 {
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
+    text-align: center;
 }
 
 /* The Close Button */
@@ -144,4 +146,16 @@ h1 {
     color: #000;
     text-decoration: none;
     cursor: pointer;
+}
+
+#play-again {
+	background-color: #141214;
+	padding: 0.7rem 1rem;
+	font-size: 1.1rem;
+	display: block;
+	margin: 0 auto;
+	width: 50%;
+	font-family: 'Gloria Hallelujah', cursive;
+	color: #ffffff;
+	border-radius: 5px;
 }
