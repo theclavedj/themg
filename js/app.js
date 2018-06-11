@@ -28,7 +28,6 @@ moves.textContent = 0; /*inspired from https://www.w3schools.com/jsref/prop_node
 let addMove = moves.textContent; /*variable which will add a move for each click*/
 let matchedCards = document.getElementsByClassName("match");
 let openCards = []; /*array of openCards*/
-let tempArray = []; /*temporary array to hold cards*/
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -53,7 +52,6 @@ function shuffle(array) {
 function startGame() { /* loops through the listCards array and randomly shuffles them */
     let fullDeck = shuffle(listCards); /* shuffle the cards */
     let newCards = ''; /*variable for shuffled cards, declared later*/
-    let tempArray = []; /*temporary array to hold cards*/
     let openCards = []; /*array of openCards*/
     matchedCards = 0; /*initial value of matched cards*/
     moves.textContent = 0;
@@ -62,12 +60,15 @@ function startGame() { /* loops through the listCards array and randomly shuffle
         stars[i].style.color = "#FFD700";
         stars[i].style.visibility = "visible";
     }
+
+    //reset the timer
     second = 0;
     minute = 0;
     hour = 0;
     let timer = document.querySelector(".timer");
     timer.innerHTML = "0 min 0 sec"; /*adds counter at beggining*/
     clearInterval(interval); /*stops the time per https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
+
       deck.innerHTML = '';
       for (let i = 0; i < fullDeck.length; i++) { /*loop through the listcards*/
         newCards += '<li class="card"><i class="' + fullDeck[i] + '"></i></li>'; /*append new li class*/
@@ -177,9 +178,11 @@ window.onclick = function(event) { // When the user clicks anywhere outside of t
     if (event.target == modal) {
         modal.style.display = "none";
     }
-function playAfterWin () {
-  playAgain.addEventListener("click", restart);
-  }
+
+playAgain.addEventListener("click", startGame);
+}
+playAgain.onclick = function () {
+  modal.style.display = "none";
 }
   /*
  * set up the event listener for a card. If a card is clicked:
