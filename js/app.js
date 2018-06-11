@@ -162,9 +162,10 @@ function openModal() {
     modal.style.display = "block";
     clearInterval(interval);
     finalTime = timer.innerHTML;
-    finalMove = moves.textContent.innerHTML;
+    finalMove = moves.textContent;
+    finalMove++;
     const starRating = document.querySelector(".stars").innerHTML;
-    document.getElementById("finalMove").innerHTML = moves;
+    document.getElementById("finalMove").innerHTML = finalMove;
     document.getElementById("starRating").innerHTML = starRating;
     document.getElementById("totalTime").innerHTML = finalTime;
 }
@@ -176,8 +177,8 @@ window.onclick = function(event) { // When the user clicks anywhere outside of t
     if (event.target == modal) {
         modal.style.display = "none";
     }
-function playAgain () {
-  playAgain.addEventListener("click", startGame);
+function playAfterWin () {
+  playAgain.addEventListener("click", restart);
   }
 }
   /*
