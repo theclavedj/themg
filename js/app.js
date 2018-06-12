@@ -80,9 +80,15 @@ function startGame() { /* loops through the listCards array and randomly shuffle
 
   function flipCard() {
     this.classList.add('open', 'show'); /*adds css class open or show*/
-    if (openCards.length < 2){ /*adds one class on click*/
+    if (openCards.length == 0){ /*adds one class on click*/
+    openCards.push(this);
+  }
+  else if (openCards.length == 1) {
+    if (openCards[0] != this) {
+      // only push if not the same card was clicked again
       openCards.push(this);
-    };
+    }
+  }
     if (openCards.length === 2) { /*if matches two cards on click*/
       if (openCards[0].innerHTML === openCards[1].innerHTML){
         pair();
@@ -173,7 +179,7 @@ function openModal() {
     document.getElementById("totalTime").innerHTML = finalTime;
 }
 }
-span.onclick = function() { // When the user clicks on <span> (x), close the modal
+span.onclick = function() { // When the user clicks the x, close the modal
     modal.style.display = "none";
 }
 window.onclick = function(event) { // When the user clicks anywhere outside of the modal, close it
@@ -181,10 +187,10 @@ window.onclick = function(event) { // When the user clicks anywhere outside of t
         modal.style.display = "none";
     }
 
-playAgain.addEventListener("click", startGame);
+playAgain.addEventListener("click", startGame); //if user hits button play again ill start a new game
 }
 playAgain.onclick = function () {
-  modal.style.display = "none";
+  modal.style.display = "none"; //if user clicks anywhere outside playagain, close the modal
 }
   /*
  * set up the event listener for a card. If a card is clicked:
