@@ -28,6 +28,7 @@ moves.textContent = 0; /*inspired from https://www.w3schools.com/jsref/prop_node
 let addMove = moves.textContent; /*variable which will add a move for each click*/
 let matchedCards = document.getElementsByClassName("match");
 let openCards = []; /*array of openCards*/
+matchedCards = 0;
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -54,13 +55,13 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     let newCards = ''; /*variable for shuffled cards, declared later*/
     let openCards = []; /*array of openCards*/
     matchedCards = 0; /*initial value of matched cards*/
+
     moves.textContent = 0;
     addMove = moves.textContent;
     for (var i= 0; i < stars.length; i++){ /*adds yellow stars at beggining*/
         stars[i].style.color = "#FFD700";
         stars[i].style.visibility = "visible";
     }
-
     //reset the timer
     second = 0;
     minute = 0;
@@ -82,31 +83,32 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     if (openCards.length < 2){ /*adds one class on click*/
       openCards.push(this);
     };
-  if (openCards.length===2){ /*if matches two cards on click*/
-    if (openCards[0].innerHTML === openCards[1].innerHTML){
-      pair();
+    if (openCards.length === 2) { /*if matches two cards on click*/
+      if (openCards[0].innerHTML === openCards[1].innerHTML){
+        pair();
      }
-    else {
-      noPair()
+     else {
+       noPair()
       };
       openModal()
 }
 addMove++; /*for each click adds a move to the counter*/
-  moves.innerText = addMove /*adds a move for any click on cards*/
-  if(addMove == 1){ /*when one move is made counter starts*/
+
+moves.innerText = addMove /*adds a move for any click on cards*/
+  if(addMove === 1){ /*when one move is made counter starts*/
         second = 0;
         minute = 0;
         hour = 0;
         startTimer();
       }
-  if (addMove > 16 && addMove < 24){ /*if less than 16 clicks gets 3 stars, more than 16 to 24 gets 2 stars*/
+  if (addMove > 22 && addMove < 28){ /*if less than 16 clicks gets 3 stars, more than 16 to 24 gets 2 stars*/
           for( i= 0; i < 3; i++){
               if(i > 1){
                   stars[i].style.visibility = "collapse";
               }
           }
       }
-      else if (addMove > 32){ /*if 32 or more clicks gets 1 star*/
+      else if (addMove > 36){ /*if 32 or more clicks gets 1 star*/
           for( i= 0; i < 3; i++){
               if(i > 0){
                   stars[i].style.visibility = "collapse";
@@ -129,7 +131,7 @@ function noPair () {/*search in the array for identical cards, if no match turn 
        openCards[0].classList.remove("show", "open");
        openCards[1].classList.remove("show", "open");
        openCards = [];
-   },600)
+   },700)
 }
 
 function cardsListener() {/*loop through the DOM card deck and adds flipcard function to it*/
