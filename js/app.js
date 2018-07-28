@@ -39,7 +39,6 @@ function shuffle(array) {
 function startGame() { /* loops through the listCards array and randomly shuffles them */
     let fullDeck = shuffle(listCards); /* shuffle the cards */
     let newCards = ''; /*variable for shuffled cards, declared later*/
-    let openCards = []; /*array of openCards*/
     matchedCards = 0; /*initial value of matched cards*/
     moves.textContent = 0;
     addMove = moves.textContent;
@@ -65,7 +64,7 @@ function startGame() { /* loops through the listCards array and randomly shuffle
 
   function flipCard() {
     this.classList.add('open', 'show', 'disabled'); /*adds css class open or show*/
-    if (openCards.length == 0){ /*adds one class on click*/
+    if (openCards.length === 0){ /*adds one class on click*/
     openCards.push(this);
   }
   else if (openCards.length == 1) {
@@ -79,13 +78,13 @@ function startGame() { /* loops through the listCards array and randomly shuffle
         pair();
      }
      else {
-       noPair()
-      };
-openModal()
+       noPair();
+      }
+openModal();
 }
 addMove++; /*for each click adds a move to the counter*/
 
-moves.innerText = addMove /*adds a move for any click on cards*/
+moves.innerText = addMove; /*adds a move for any click on cards*/
   if(addMove === 1){ /*when one move is made counter starts*/
         second = 0;
         minute = 0;
@@ -126,11 +125,11 @@ function noPair () {/*search in the array for identical cards, if no match flip 
        openCards[1].classList.remove("show", "open", "noPair");
        enable();
        openCards = [];
-   },600)
+   },600);
   }
 
 function disable() {
-  document.addEventListener("click",handler,true); 
+  document.addEventListener("click",handler,true);
     function handler(e){
       if(openCards.length == 2) { /*if matches two cards on click*/
       e.stopPropagation(); /* avoids clicking a third card when 2 cards are open*/
@@ -187,7 +186,7 @@ function openModal() {
 }
 span.onclick = function() { // When the user clicks the x, close the modal
     modal.style.display = "none";
-}
+};
 
 window.onclick = function(event) { // When the user clicks anywhere outside of the modal, close it
     if (event.target == modal) {
@@ -195,11 +194,11 @@ window.onclick = function(event) { // When the user clicks anywhere outside of t
     }
 
 playAgain.addEventListener("click", startGame); //if user hits button play again ill start a new game
-}
+};
 
 playAgain.onclick = function () {
   modal.style.display = "none"; //if user clicks anywhere outside playagain, close the modal
-}
+};
 restart.addEventListener("click", startGame); /*restarts the game when clicking proper icon*/
 /*
  * set up the event listener for a card. If a card is clicked:
