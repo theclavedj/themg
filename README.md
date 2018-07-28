@@ -15,6 +15,4 @@ In order to play the game, you must find pairs of identical cards, the game is w
 
 ## Contributing
 
-Most of this repo was build using the knowledge acquired on the FEND scholarship provided by Udacity/Google and with advice from a Mentor. Mainly the project was made with Vanilla Javascript and DOM manipulation. For some of the code, I've used some articles from websites to accomplish some of the functionality, such as w3schools and scotch.io/tutorials
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+Most of this repo was build using the knowledge acquired on the FEND scholarship provided by Udacity/Google and with advice from a Mentor. Mainly the project was made with Vanilla Javascript and DOM manipulation. For some of the code, I've used some articles from websites to accomplish some of the functionality, such as Stackoverflow, w3schools and scotch.io/tutorials. Details are included in .js file

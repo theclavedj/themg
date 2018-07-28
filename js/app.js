@@ -128,7 +128,7 @@ function noPair () {/*search in the array for identical cards, if no match flip 
    },600);
   }
 
-function disable() {
+function disable() { /*both functions disable-enable are made inspired in the article from https://stackoverflow.com/questions/1755815/disable-all-click-events-on-page-javascript*/
   document.addEventListener("click",handler,true);
     function handler(e){
       if(openCards.length == 2) { /*if matches two cards on click*/
