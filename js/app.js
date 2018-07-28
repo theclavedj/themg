@@ -1,18 +1,31 @@
+/* Create a list that holds all of your cards */
 let cards = ['fa fa-diamond', 'fa fa-paper-plane-o', 'fa fa-anchor',  'fa fa-bolt',  'fa fa-cube', 'fa fa-leaf',  'fa fa-bicycle',  'fa fa-bomb'];
-const listCards = [...cards, ...cards]; /* Create a list that holds all of your cards */
+const listCards = [...cards, ...cards];
 
-document.body.onload = startGame; /*starts the game on page load*/
-const restart = document.querySelector(".restart"); /*DOM selection for html restart icon*/
-const playAgain = document.querySelector(".play-again"); /*DOM selection for html restart icon*/
-const deck = document.querySelector('.deck'); /*DOM selector to get html deck*/
-const moves = document.querySelector(".moves");/*DOM selector to get the html moves class*/
-const stars = document.querySelectorAll(".fa-star"); /*DOM selector to get stars*/
-const modal = document.getElementById('myModal'); /*dom selector for the modal*/
-const span = document.getElementsByClassName("close")[0];// Get the <span> element that closes the modal
-moves.textContent = 0; /*inspired from https://www.w3schools.com/jsref/prop_node_textcontent.asp*/
-let addMove = moves.textContent; /*variable which will add a move for each click*/
+/*starts the game on page load*/
+document.body.onload = startGame;
+/*DOM selection for html restart icon*/
+const restart = document.querySelector(".restart");
+/*DOM selection for html restart icon*/
+const playAgain = document.querySelector(".play-again");
+/*DOM selector to get html deck*/
+const deck = document.querySelector('.deck');
+/*DOM selector to get the html moves class*/
+const moves = document.querySelector(".moves");
+/*DOM selector to get stars*/
+const stars = document.querySelectorAll(".fa-star");
+/*dom selector for the modal*/
+const modal = document.getElementById('myModal');
+// Get the <span> element that closes the modal
+const span = document.getElementsByClassName("close")[0];
+/*inspired from https://www.w3schools.com/jsref/prop_node_textcontent.asp*/
+moves.textContent = 0;
+/*variable which will add a move for each click*/
+let addMove = moves.textContent;
 let matchedCards = document.getElementsByClassName("match");
-let openCards = []; /*array of openCards*/
+/*array of openCards*/
+let openCards = [];
+/*initial value of matchedCards*/
 matchedCards = 0;
 
 /*
@@ -35,16 +48,22 @@ function shuffle(array) {
 
     return array;
   }
-
-function startGame() { /* loops through the listCards array and randomly shuffles them */
-    let fullDeck = shuffle(listCards); /* shuffle the cards */
-    let newCards = ''; /*variable for shuffled cards, declared later*/
-    matchedCards = 0; /*initial value of matched cards*/
+/* loops through the listCards array and randomly shuffles them */
+function startGame() {
+    /* shuffle the array listCards */
+    let fullDeck = shuffle(listCards);
+    /*empty array of open cards when clicked*/
+    let openCards = [];
+    /*variable for shuffled cards, declared later*/
+    let newCards = '';
+    /*initial value of matched cards*/
+    matchedCards = 0;
     moves.textContent = 0;
     addMove = moves.textContent;
-    for (var i= 0; i < stars.length; i++){ /*adds yellow stars at beggining*/
-        stars[i].style.color = "#FFD700";
-        stars[i].style.visibility = "visible";
+    /*adds yellow stars at beggining*/
+    for (var i= 0; i < stars.length; i++){
+      stars[i].style.color = "#FFD700";
+      stars[i].style.visibility = "visible";
     }
     //reset the timer
     second = 0;
@@ -53,112 +72,130 @@ function startGame() { /* loops through the listCards array and randomly shuffle
     let timer = document.querySelector(".timer");
     timer.innerHTML = "0 min 0 sec"; /*adds counter at beggining*/
     clearInterval(interval); /*stops the time per https://www.w3schools.com/jsref/met_win_clearinterval.asp*/
-
       deck.innerHTML = '';
-      for (let i = 0; i < fullDeck.length; i++) { /*loop through the listcards*/
-        newCards += '<li class="card"><i class="' + fullDeck[i] + '"></i></li>'; /*append new li class*/
-        deck.innerHTML = newCards;
+      /*loop through the listcards*/
+        for (let i = 0; i < fullDeck.length; i++) {
+        /*append new li class*/
+          newCards += '<li class="card"><i class="' + fullDeck[i] + '"></i></li>';
+            deck.innerHTML = newCards;
   }
-  cardsListener(); /*adds cardListener at start*/
+  /*adds cardListener at start to the DOM*/
+  cardsListener();
 }
 
-  function flipCard() {
-    this.classList.add('open', 'show', 'disabled'); /*adds css class open or show*/
-    if (openCards.length === 0){ /*adds one class on click*/
-    openCards.push(this);
-  }
+function flipCard() {
+  /*adds css class open or show*/
+  this.classList.add('open', 'show');
+    /*adds one class on click*/
+    if (openCards.length === 0){
+      openCards.push(this);
+    }
+
   else if (openCards.length == 1) {
     if (openCards[0] != this) {
       // only push if not the same card was clicked again
       openCards.push(this);
+      }
     }
-  }
-    if (openCards.length === 2) { /*if matches two cards on click*/
+    /*if matches two cards on click*/
+    if (openCards.length === 2) {
+      counter();
       if (openCards[0].innerHTML === openCards[1].innerHTML){
         pair();
      }
      else {
        noPair();
       }
-openModal();
-}
-addMove++; /*for each click adds a move to the counter*/
-
-moves.innerText = addMove; /*adds a move for any click on cards*/
-  if(addMove === 1){ /*when one move is made counter starts*/
-        second = 0;
-        minute = 0;
-        hour = 0;
-        startTimer();
-      }
-  if (addMove > 22 && addMove < 28){ /*if less than 16 clicks gets 3 stars, more than 16 to 24 gets 2 stars*/
-          for( i= 0; i < 3; i++){
-              if(i > 1){
-                  stars[i].style.visibility = "collapse";
-              }
-          }
-      }
-      else if (addMove > 36){ /*if 32 or more clicks gets 1 star*/
-          for( i= 0; i < 3; i++){
-              if(i > 0){
-                  stars[i].style.visibility = "collapse";
-              }
-          }
-      }
+    openModal();
   }
 
-function pair () { /*search in the array for identical cards*/
+/*if less than 11 clicks gets 3 stars, more than 16 gets 2 stars*/
+    if (addMove > 11 && addMove < 16){
+      for( i= 0; i < 3; i++){
+        if(i > 1){
+          stars[i].style.visibility = "collapse";
+        }
+      }
+    }
+
+  /*if 20 or more clicks gets 1 star*/
+    else if (addMove > 20){
+      for( i= 0; i < 3; i++){
+        if(i > 0){
+          stars[i].style.visibility = "collapse";
+        }
+      }
+    }
+  }
+
+function counter() {
+    addMove++;
+    moves.innerHTML = addMove;
+
+}
+/*search in the array for identical cards*/
+function pair () {
   openCards[0].classList.add("match");
-   openCards[1].classList.add("match");
-   openCards[0].classList.remove("show", "open");
-   openCards[1].classList.remove("show", "open");
-   openCards = [];
-   matchedCards++;
+  openCards[1].classList.add("match");
+  openCards[0].classList.remove("show", "open");
+  openCards[1].classList.remove("show", "open");
+  openCards = [];
+  matchedCards++;
 }
 
-function noPair () {/*search in the array for identical cards, if no match flip them at 700ms*/
+/*search in the array for identical cards, if no match flip them at 700ms*/
+function noPair () {
   openCards[0].classList.add("noPair");
   openCards[1].classList.add("noPair");
+  /*stops the possibility of clicking a third card*/
   disable();
+  /*delay of animation after clicking two cards*/
   setTimeout (function(){
-       openCards[0].classList.remove("show", "open", "noPair");
-       openCards[1].classList.remove("show", "open", "noPair");
+    openCards[0].classList.remove("show", "open", "noPair");
+    openCards[1].classList.remove("show", "open", "noPair");
+      /*when it isnt a match, allow player to click again on the cards*/
        enable();
        openCards = [];
-   },600);
+    /*time of animation*/
+  },600);
   }
 
-function disable() { /*both functions disable-enable are made inspired in the article from https://stackoverflow.com/questions/1755815/disable-all-click-events-on-page-javascript*/
+/*both functions disable-enable are made inspired in the article from https://stackoverflow.com/questions/1755815/disable-all-click-events-on-page-javascript*/
+function disable() {
   document.addEventListener("click",handler,true);
     function handler(e){
-      if(openCards.length == 2) { /*if matches two cards on click*/
-      e.stopPropagation(); /* avoids clicking a third card when 2 cards are open*/
+      /*if matches two cards on click*/
+      if(openCards.length == 2) {
+      /* avoids clicking a third card when 2 cards are open*/
+      e.stopPropagation();
+    }
   }
 }
-}
-
+/*when it isnt a match, allow player to click again on the cards*/
 function enable() {
   document.removeEventListener("click", handler,true);
     function handler(e){
       e.stopPropagation();
-}
+  }
 }
 
-function cardsListener() {/*loop through the DOM card deck and adds flipcard function to it*/
-
+/*loop through the DOM card deck and adds flipcard function to it*/
+function cardsListener() {
   let cards = deck.getElementsByClassName("card");
-     for (let i=0; i < cards.length; i++) {
+  startTimer();
+    for (let i=0; i < cards.length; i++) {
        cards[i].addEventListener('click', flipCard);
   }
 }
 
-let second = 0, minute = 0; hour = 0; /*timer function inspired from https://scotch.io/tutorials/how-to-build-a-memory-matching-game-in-javascript#5-the-timer*/
+/*timer function inspired from https://scotch.io/tutorials/how-to-build-a-memory-matching-game-in-javascript#5-the-timer*/
+let second = 0, minute = 0; hour = 0;
 let timer = document.querySelector(".timer");
 let interval;
 
-function startTimer(){
-    interval = setInterval(function(){
-        timer.innerHTML = minute+"min "+second+"sec";
+function startTimer() {
+    interval = setInterval(function() {
+        timer.innerHTML = minute+" min "+second+" sec";
         second++;
         if(second == 60){
             minute++;
@@ -168,38 +205,45 @@ function startTimer(){
             hour++;
             minute = 0;
         }
-    },1000);
+    },1100);
 }
 
+/*shows the modal once the 8 pairs of cards have been matched*/
 function openModal() {
     if (matchedCards === 8){
-    modal.style.display = "block";
-    clearInterval(interval);
-    finalTime = timer.innerHTML;
-    finalMove = moves.textContent;
-    finalMove++;
-    const starRating = document.querySelector(".stars").innerHTML;
-    document.getElementById("finalMove").innerHTML = finalMove;
-    document.getElementById("starRating").innerHTML = starRating;
-    document.getElementById("totalTime").innerHTML = finalTime;
-}
-}
-span.onclick = function() { // When the user clicks the x, close the modal
+      modal.style.display = "block";
+      clearInterval(interval);
+      finalTime = timer.innerHTML;
+      finalMove = moves.textContent;
+      finalMove++;
+        const starRating = document.querySelector(".stars").innerHTML;
+          document.getElementById("finalMove").innerHTML = finalMove;
+          document.getElementById("starRating").innerHTML = starRating;
+          document.getElementById("totalTime").innerHTML = finalTime;
+        }
+      }
+
+// When the user clicks the x, close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
     modal.style.display = "none";
+  }
+
+//if user hits button play again ill start a new game
+playAgain.addEventListener("click", startGame);
 };
 
-window.onclick = function(event) { // When the user clicks anywhere outside of the modal, close it
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-
-playAgain.addEventListener("click", startGame); //if user hits button play again ill start a new game
-};
-
+//if user clicks anywhere outside playagain, close the modal
 playAgain.onclick = function () {
-  modal.style.display = "none"; //if user clicks anywhere outside playagain, close the modal
+  modal.style.display = "none";
 };
-restart.addEventListener("click", startGame); /*restarts the game when clicking proper icon*/
+/*restarts the game when clicking proper icon*/
+restart.addEventListener("click", startGame);
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
